@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Web API Demo</title>
+    <script src="app.js"></script>
+</head>
+<body>
+    <h1>Excel to JSON Converter</h1>
+    <input type="file" id="fileInput" accept=".csv" onchange="convertFile()">
+    <!-- <button onclick="convertFile()">Click 2nd: Convert</button> -->
+</body>
+<body onload="onPageLoad()">
+    <h2>Spotify Start</h2>
+    <div class="container">
+        <div id="tokenSection" class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="clientId" class="form-label">Client ID</label>
+                    <input type="text" class="form-control" id="clientId" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="clientSecret" class="form-label">Client Secret</label>
+                    <input type="password" class="form-control" id="clientSecret" placeholder="">
+                </div>
+                <input class="btn btn-primary btn-lg" type="button" onclick="requestAuthorization()" value="Click 1st: Request Authorization"><br/>
+                <input class="btn btn-primary btn-lg" type="button" onclick="searchTrack()" value="Click 4th: get track ID's"><br/>
+                <input class="btn btn-primary btn-lg" type="button" onclick="createPlaylist()" value="Click 3rd: Make playlists"><br/>
+                <input class="btn btn-primary btn-lg" type="button" onclick="addTracks2Playlist()" value="add tracks"><br/>
+                <!-- <input class="btn btn-primary btn-lg" type="button" onclick="finalRun()" value="PRESS ME"><br/> -->
+            </div>
+        </div>
+        </div>
+    </body> 
+</html>
