@@ -89,12 +89,9 @@ function handleRedirect(){
 
 function getCode(){
   let code = null;
-  const queryString = window.location.search; //returns 'search' part of the URL i.e.
-  //the query string this is the part after 'q=' in the url
+  const queryString = window.location.search; 
   if ( queryString.length > 0 ){
       const urlParams = new URLSearchParams(queryString); 
-// URLSearchParams parses the query string into key value pairs i.e. will parse it into
-// code = 'code' so in this case the next line will get the assigned pair to 'code' 
       code = urlParams.get('code')
   }
   return code;
@@ -106,7 +103,7 @@ function requestAuthorization(){
   client_id = document.getElementById("clientId").value;
   client_secret = document.getElementById("clientSecret").value;
   localStorage.setItem("client_id", client_id);
-  localStorage.setItem("client_secret", client_secret); // In a real app you should not expose your client_secret to the user
+  localStorage.setItem("client_secret", client_secret);
 
   let url = AUTHORIZE;
   url += "?client_id=" + client_id;
@@ -114,17 +111,16 @@ function requestAuthorization(){
   url += "&redirect_uri=" + encodeURI(redirect_uri);
   url += "&show_dialog=true";
   url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private playlist-modify-public playlist-modify-private";
-  window.location.href = url; // Show Spotify's authorization screen
+  window.location.href = url; // shows Spotify's authorization screen innit
 }
 
 function callApi(method, url, body) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    const access_token = localStorage.getItem("access_token"); // Declare access_token variable here
-    //console.log(access_token);
+    const access_token = localStorage.getItem("access_token"); 
+  
     if (access_token !== "null") {
-      //console.log('r u here?')
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
       xhr.send(body);
@@ -138,7 +134,6 @@ function callApi(method, url, body) {
       const resStat = xhr.status;
       const resText = xhr.responseText;
       if (xhr.status >= 200 && xhr.status < 300) {
-        //resolve(xhr.responseText);
         resolve({ resStat: resStat, resText: resText});
       } else {
         reject("Failed with status code " + xhr.status);
@@ -160,7 +155,6 @@ async function fetchAccessToken(code) {
 
   try {
     localStorage.setItem("access_token", null);
-    //let responseText = await callApi("POST", TOKEN, body);
     callApi("POST", TOKEN, body)
       .then(({ resText }) => {
         var data = JSON.parse(resText);
@@ -176,7 +170,6 @@ async function fetchAccessToken(code) {
         }
       })
  
-    //onPageLoad();
   } catch (error) {
     console.error("Failed to fetch access token:", error);
     alert("Failed to fetch access token. Please try again.");
@@ -207,22 +200,6 @@ let playlistjson = {
     }
   ]
 };
-
-// function finalRun() {
-//   callApi("GET", `${searchEndpoint}q=${encodeURIComponent("dheukfhsuefhekfh")}&type=track`, null)
-//     .then(({ resStat, resText}) => {
-
-//       var data = JSON.parse(resText);
-//       let track_id = data.tracks.items[0].uri;
-      
-//       let song = {
-//         "track_id": track_id,
-//         "name": jsonData[i].Songs
-//       };
-
-//       console.log(song);
-//     })
-// }
 
 async function searchTrack() {
 
@@ -256,7 +233,6 @@ async function searchTrack() {
               refreshAccessToken();
             } else {
               console.log('Response status:', resStat);
-          //console.log('Response text:', responseText);
             }
           } catch (error) {
             //playlist.songs.push("");
@@ -294,15 +270,11 @@ async function createPlaylist() {
 
             playlistjson.playlists.push(playlist);
 
-            //addTracks2Playlist();
           } else if (resStat == 401) {
             refreshAccessToken()
           } else {
             console.log('Response status:', response.statusCode);
-        //console.log('Response text:', responseText);
           }
-          // console.log(result1);
-          // console.log(result2);
         });
 
       } catch (error) {
@@ -315,7 +287,6 @@ async function createPlaylist() {
 
 
 async function addTracks2Playlist() {
-  //console.log("any1 home?");
   for (let i = 0; i < playlistjson.playlists.length; i++) {
     try {
       if (playlistjson.playlists[i].name != "") {
